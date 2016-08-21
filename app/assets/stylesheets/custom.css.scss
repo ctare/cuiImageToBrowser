@@ -1,0 +1,12 @@
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+
+header{
+  h1{
+    color: gray;
+  }
+  a{
+    color: white;
+    margin-left: 10px;
+  }
+}

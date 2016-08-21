@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :favorites
+  devise_for :users
+  # devise_for :users, controllers: {
+  #     sessions: 'users/sessions'
+  # }
+  resources :images
+  root 'home#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

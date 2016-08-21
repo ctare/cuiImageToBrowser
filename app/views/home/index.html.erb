@@ -1,0 +1,60 @@
+<style>
+  body{
+    margin-top: 80px;
+  }
+</style>
+
+<header class="nav navbar navbar-inverse navbar-fixed-top">
+    <% if user_signed_in? %>
+        <h1>ログイン中(<%= current_user.email %>):<%= current_user.name %></h1>
+        <%= link_to 'ユーザー情報を変更', edit_user_registration_path %><br>
+        <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %><br>
+    <% else %>
+        <h1>ログアウト中</h1>
+        <%= link_to 'ユーザー登録', new_user_registration_path %><br>
+        <%= link_to 'ログイン', new_user_session_path %><br>
+    <% end %>
+</header>
+
+<% if user_signed_in? %>
+  <%= form_for(@image) do |f| %>
+      <% if @image.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
+
+            <ul>
+              <% @image.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <div class="field">
+        <%= f.label :data %><br>
+        <%= f.text_field :data, :placeholder => 'url' %>
+      </div>
+      <div class="field">
+        <%= f.label :title %><br>
+        <%= f.text_field :title %>
+      </div>
+      <div class="field">
+        <% @image.user_id = current_user.id %>
+        <%= f.hidden_field :user_id %>
+      </div>
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+  <% end %>
+<% end %>
+
+<div class="container">
+  <% @images.each do |image| %>
+      <% unless image.user.nil? %>
+        <div class="container">
+          <h3 style="display: inline-block"><%= link_to "#{image.title} : #{image.user.name}", image %></h3>
+          <span><%= link_to 'delete', image, method: :delete %></span>
+        </div>
+      <% end %>
+  <% end %>
+</div>

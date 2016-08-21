@@ -1,9 +1,8 @@
-#/usr/bin/python3
+#!/usr/bin/python3
 import io
 import requests
 from PIL import Image
 import numpy as np
-from matplotlib import pylab as plt
 arr = [0x00, 0x5F, 0x87, 0xAF, 0xD7, 0xFF]
 
 
@@ -33,6 +32,10 @@ def mkclb(num):
     return "[48;5;{}m".format(num)
 
 
+def html(color):
+    return '<span style="color: rgb({r}, {g}, {b})">{{}}</span>'.format(r=color[0], g=color[1], b=color[2]).format
+
+
 def resize(img, to_size):
     size = img.size
     if size[0] < size[1]: # vertical
@@ -55,10 +58,10 @@ def create_data(img, size=None):
     else: img = np.array(resize(img, int(size)))
 
     result = ""
-    for line in [[(color[0] << 16) | (color[1] << 8) | color[2] for color in column] for column in img]:
+    for line in [[html(color) for color in column] for column in img]:
         for i in line:
-            result += mkcl(color(i)) + "##"
-        result += "\n"
+            result += i("##")
+        result += "<br>"
     return result
 
 

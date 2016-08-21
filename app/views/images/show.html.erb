@@ -1,0 +1,31 @@
+<style>
+    body{
+      background: #222;
+    }
+    p{
+      color: white;
+    }
+    span.title{
+      font-size: x-large;
+    }
+
+    a{
+      color: white;
+    }
+
+    a:linked{
+      color: white;
+    }
+</style>
+
+<p>
+  <strong>Title:</strong>
+  <span class="title"><%= @image.title %></span>
+  <%= link_to 'Edit', edit_image_path(@image) %> |
+  <%= link_to 'Home', root_path %>
+</p>
+
+<p>
+  <strong>Data:</strong><br>
+  <span class="image-text"><%= @image.data.to_s.html_safe %></span>
+</p>
